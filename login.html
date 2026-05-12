@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Authentification - Unitix</title>
+    <meta name="description" content="Connectez-vous ou inscrivez-vous à Unitix.">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="./css/variables.css">
+    <link rel="stylesheet" href="./css/reset.css">
+    <link rel="stylesheet" href="./css/base.css">
+    <link rel="stylesheet" href="./css/pages/login.css">
+    <link rel="stylesheet" href="./css/animations.css">
+    <style>
+        .hidden-view { display: none !important; }
+    </style>
+</head>
+<body>
+    <div class="auth-wrapper">
+        <div class="auth-background-effects">
+            <div class="glow-orb orb-1"></div>
+            <div class="glow-orb orb-2"></div>
+        </div>
+
+        <div class="auth-card">
+            <div class="auth-header">
+                <img src="./assets/logo.png" alt="Unitix Logo" class="auth-logo">
+                <h2 id="auth-title">Connexion à Unitix</h2>
+                <p id="auth-subtitle">Générez. Testez. Confirmez.</p>
+            </div>
+            
+            <!-- VUE DE CONNEXION -->
+            <div id="login-view">
+                <form class="auth-form" action="index.html">
+                    <div class="input-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" placeholder="dev@entreprise.com" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="password">Mot de passe</label>
+                        <input type="password" id="password" placeholder="••••••••" required>
+                    </div>
+                    
+                    <div class="form-options">
+                        <label class="remember-me">
+                            <input type="checkbox" checked> Se souvenir de moi
+                        </label>
+                        <a href="#" class="forgot-pass">Mot de passe oublié ?</a>
+                    </div>
+
+                    <button type="submit" class="submit-btn glow-button">
+                        <span class="btn-text">Se Connecter</span>
+                    </button>
+                </form>
+
+                <div class="auth-separator">
+                    <span>ou se connecter avec</span>
+                </div>
+                
+                <div class="auth-providers">
+                    <button class="provider-btn github">
+                        <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+                        GitHub
+                    </button>
+                    <button class="provider-btn gitlab">
+                        <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M22.65 14.39L12 22.13 1.35 14.39a.84.84 0 0 1-.3-.94l1.22-3.78 2.44-7.51A.42.42 0 0 1 4.82 2a.43.43 0 0 1 .58 0 .42.42 0 0 1 .11.18l2.44 7.49h8.1l2.44-7.51A.42.42 0 0 1 18.6 2a.43.43 0 0 1 .58 0 .42.42 0 0 1 .11.18l2.44 7.51L23 13.45a.84.84 0 0 1-.35.94z"></path></svg>
+                        GitLab
+                    </button>
+                    <button class="provider-btn google">
+                        <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M12 12v-6"></path><path d="M12 12l4 3"></path></svg>
+                        Google
+                    </button>
+                </div>
+                
+                <p class="auth-footer">
+                    Nouveau sur Unitix ? <a href="#" id="go-to-signup">Créer un compte</a>
+                </p>
+            </div>
+
+            <!-- VUE D'INSCRIPTION -->
+            <div id="signup-view" class="hidden-view">
+                <form class="auth-form" action="index.html">
+                    <div class="input-group">
+                        <label for="signup-name">Nom complet</label>
+                        <input type="text" id="signup-name" placeholder="John Doe" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="signup-email">Email</label>
+                        <input type="email" id="signup-email" placeholder="dev@entreprise.com" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="signup-password">Mot de passe</label>
+                        <input type="password" id="signup-password" placeholder="••••••••" required>
+                    </div>
+
+                    <button type="submit" class="submit-btn glow-button">
+                        <span class="btn-text">S'inscrire</span>
+                    </button>
+                </form>
+
+                <div class="auth-separator">
+                    <span>ou s'inscrire avec</span>
+                </div>
+                
+                <div class="auth-providers">
+                    <button class="provider-btn github">
+                        <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+                        GitHub
+                    </button>
+                    <button class="provider-btn gitlab">
+                        <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M22.65 14.39L12 22.13 1.35 14.39a.84.84 0 0 1-.3-.94l1.22-3.78 2.44-7.51A.42.42 0 0 1 4.82 2a.43.43 0 0 1 .58 0 .42.42 0 0 1 .11.18l2.44 7.49h8.1l2.44-7.51A.42.42 0 0 1 18.6 2a.43.43 0 0 1 .58 0 .42.42 0 0 1 .11.18l2.44 7.51L23 13.45a.84.84 0 0 1-.35.94z"></path></svg>
+                        GitLab
+                    </button>
+                    <button class="provider-btn google">
+                        <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M12 12v-6"></path><path d="M12 12l4 3"></path></svg>
+                        Google
+                    </button>
+                </div>
+                
+                <p class="auth-footer">
+                    Déjà un compte ? <a href="#" id="go-to-login">Se connecter</a>
+                </p>
+            </div>
+            
+        </div>
+    </div>
+
+    <script>
+        // Logique simple pour basculer entre Inscription et Connexion
+        const loginView = document.getElementById('login-view');
+        const signupView = document.getElementById('signup-view');
+        const authTitle = document.getElementById('auth-title');
+        const authSubtitle = document.getElementById('auth-subtitle');
+        
+        document.getElementById('go-to-signup').addEventListener('click', (e) => {
+            e.preventDefault();
+            loginView.classList.add('hidden-view');
+            signupView.classList.remove('hidden-view');
+            authTitle.textContent = "Inscription à Unitix";
+            authSubtitle.textContent = "Rejoignez le laboratoire de tests.";
+        });
+
+        document.getElementById('go-to-login').addEventListener('click', (e) => {
+            e.preventDefault();
+            signupView.classList.add('hidden-view');
+            loginView.classList.remove('hidden-view');
+            authTitle.textContent = "Connexion à Unitix";
+            authSubtitle.textContent = "Générez. Testez. Confirmez.";
+        });
+    </script>
+</body>
+</html>

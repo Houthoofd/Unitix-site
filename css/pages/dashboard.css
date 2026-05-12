@@ -1,0 +1,176 @@
+.view-section {
+    display: none;
+    flex-direction: column;
+    flex: 1;
+    gap: 1.5rem;
+    height: 100%;
+    width: 100%;
+    overflow-y: auto;
+}
+
+.view-section.active-view {
+    display: flex;
+    animation: fade-in 0.3s ease;
+}
+
+@keyframes fade-in {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Generator Layout specifically needs row orientation on desktop */
+.generator-layout {
+    flex-direction: row;
+    overflow: hidden; /* generator panels scroll independently */
+    gap: 1rem;
+}
+@media (max-width: 1024px) {
+    .generator-layout {
+        flex-direction: column;
+        overflow-y: auto;
+    }
+}
+
+/* Dashboard Specifics */
+.dashboard-header h2 {
+    font-size: 1.5rem;
+    color: var(--text-main);
+    margin-bottom: 0.5rem;
+}
+.dashboard-header p {
+    color: var(--text-muted);
+}
+
+.stat-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+}
+
+.stat-card {
+    background: var(--bg-panel);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-md);
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.stat-card h3 {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.stat-value {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--neon-cyan);
+    text-shadow: 0 0 10px var(--neon-cyan-dim);
+}
+
+.stat-trend {
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+.stat-trend.positive { color: var(--neon-green); }
+.stat-trend.neutral { color: var(--text-muted); }
+
+.dashboard-placeholder {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: 2px dashed var(--border-light);
+    border-radius: var(--radius-lg);
+    color: var(--text-muted);
+    gap: 1rem;
+    min-height: 200px;
+}
+
+/* Table Styles for History */
+.table-container {
+    background: var(--bg-panel);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+}
+
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+.data-table th, .data-table td {
+    padding: 1rem;
+    border-bottom: 1px solid var(--border-light);
+}
+
+.data-table th {
+    background: rgba(0,0,0,0.2);
+    font-weight: 600;
+    color: var(--text-muted);
+}
+
+.data-table tr:last-child td {
+    border-bottom: none;
+}
+
+.badge-success {
+    color: var(--neon-green);
+    border-color: var(--neon-green);
+    background: var(--neon-green-dim);
+}
+
+.badge-error {
+    color: #ff6b6b;
+    border-color: #ff6b6b;
+    background: rgba(255, 107, 107, 0.1);
+}
+
+/* Tree View */
+.tree-view {
+    background: var(--bg-panel);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-lg);
+    padding: 1.5rem;
+    font-family: var(--font-mono);
+}
+
+.tree-view ul {
+    list-style: none;
+    padding-left: 1.5rem;
+}
+
+.tree-view > ul {
+    padding-left: 0;
+}
+
+.tree-view li {
+    margin: 0.5rem 0;
+}
+
+.node-title {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+}
+
+.file .coverage {
+    font-size: 0.8rem;
+    margin-left: 1rem;
+}
+
+.file.tested .coverage { color: var(--neon-green); }
+.file.untested .coverage { color: #ff6b6b; }
+
+/* Settings Form */
+.settings-form {
+    max-width: 600px;
+    padding: 2rem;
+}

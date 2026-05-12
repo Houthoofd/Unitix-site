@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unitix - Générateur de Tests</title>
+    <meta name="description" content="Générez vos tests unitaires et d'intégration instantanément.">
+    
+    <!-- Polices -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    
+    <!-- CSS Modulaires -->
+    <link rel="stylesheet" href="./css/variables.css">
+    <link rel="stylesheet" href="./css/reset.css">
+    <link rel="stylesheet" href="./css/base.css">
+    <link rel="stylesheet" href="./css/layout.css">
+    <link rel="stylesheet" href="./css/components/header.css">
+    <link rel="stylesheet" href="./css/components/panels.css">
+    <link rel="stylesheet" href="./css/components/controls.css">
+    <link rel="stylesheet" href="./css/components/sidebar.css">
+    <link rel="stylesheet" href="./css/pages/dashboard.css">
+    <link rel="stylesheet" href="./css/pages/onboarding.css">
+    <link rel="stylesheet" href="./css/components/tutorial.css">
+    <link rel="stylesheet" href="./css/animations.css">
+</head>
+<body>
+    <!-- TUTORIAL ELEMENTS (Cachés par défaut) -->
+    <div class="tutorial-overlay hidden" id="tutorial-overlay"></div>
+    <div class="tutorial-popover hidden" id="tutorial-popover">
+        <div class="tutorial-header">
+            <h3 id="tutorial-title">Titre</h3>
+            <span id="tutorial-step" class="tutorial-step-badge">1/4</span>
+        </div>
+        <p id="tutorial-desc">Description</p>
+        <div class="tutorial-actions">
+            <button class="btn-skip" id="tutorial-btn-skip">Passer</button>
+            <button class="btn-next" id="tutorial-btn-next">Suivant</button>
+        </div>
+    </div>
+
+    <div class="app-container">
+        <!-- SIDEBAR ESPACE PERSONNEL -->
+        <aside id="sidebar" class="sidebar">
+            <div class="sidebar-header">
+                <h3>Tableau de Bord</h3>
+                <button id="close-sidebar" class="icon-btn">
+                    <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                </button>
+            </div>
+            <nav class="sidebar-nav" id="sidebar-nav">
+                <a href="#" class="nav-item active" data-view="dashboard">
+                    <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+                    <span class="nav-text">Vue d'ensemble</span>
+                </a>
+                <a href="#" class="nav-item" data-view="generator">
+                    <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+                    <span class="nav-text">Générateur</span>
+                </a>
+                <a href="#" class="nav-item" data-view="history">
+                    <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
+                    <span class="nav-text">Historique des Tests</span>
+                </a>
+                <a href="#" class="nav-item" data-view="architecture">
+                    <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+                    <span class="nav-text">Architecture Projet</span>
+                </a>
+                <a href="#" class="nav-item" data-view="templates">
+                    <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
+                    <span class="nav-text">Templates Perso</span>
+                </a>
+                <a href="#" class="nav-item" data-view="settings">
+                    <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+                    <span class="nav-text">Paramètres</span>
+                </a>
+                
+                <div style="flex: 1;"></div>
+                
+                <a href="login.html" class="nav-item" style="color: #ff6b6b; border-top: 1px solid var(--border-light); margin-top: 1rem;">
+                    <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+                    <span class="nav-text">Déconnexion</span>
+                </a>
+            </nav>
+        </aside>
+
+        <!-- MAIN CONTENT WRAPPER -->
+        <div class="main-content">
+            <!-- HEADER -->
+        <header class="app-header">
+            <div class="header-left">
+                <div class="logo-container" id="app-logo-btn" style="cursor: pointer;">
+                    <div class="logo-icon"></div>
+                    <h1 class="logo-text">Unitix</h1>
+                </div>
+                <p class="slogan">GENERATE. TEST. CONFIRM.</p>
+            </div>
+            
+            <div class="header-right">
+                <div class="project-selector-wrapper hidden" id="project-selector-wrapper">
+                    <svg viewBox="0 0 24 24" width="16" height="16" stroke="var(--neon-cyan)" stroke-width="2" fill="none" class="folder-icon"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
+                    <select id="project-selector" class="project-select">
+                        <option value="ecommerce">E-commerce App</option>
+                        <option value="admin">Admin Dashboard</option>
+                        <option value="new">➕ Importer un nouveau projet...</option>
+                    </select>
+                </div>
+                
+                <div class="user-profile locked" id="user-profile-btn">
+                    <div class="avatar">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                    </div>
+                    <div class="user-info">
+                        <span class="user-name">Espace Personnel</span>
+                        <span class="user-role" id="profile-status"><svg viewBox="0 0 24 24" width="12" height="12" stroke="currentColor" stroke-width="2" fill="none" style="vertical-align: middle; margin-right: 4px;"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>Verrouillé</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- MAIN WORKSPACE -->
+        <main class="workspace" id="app-content">
+            
+            <!-- VUE: ONBOARDING (ACTIVE PAR DEFAUT) -->
+            <section class="view-section active-view" id="view-onboarding">
+                <div class="onboarding-container">
+                    <div class="onboarding-header">
+                        <h2>Importer un Projet</h2>
+                        <p>Unitix a besoin d'analyser votre base de code pour initialiser votre espace personnel.</p>
+                    </div>
+                    
+                    <div class="huge-upload-zone" id="project-upload-zone">
+                        <div class="upload-content">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="upload-icon-large"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path><line x1="12" y1="11" x2="12" y2="17"></line><polyline points="9 14 12 11 15 14"></polyline></svg>
+                            <h3>Glissez-déposez votre projet</h3>
+                            <p>Dossier complet ou fichier zip supporté</p>
+                            <button class="glow-button" style="margin-top: 1.5rem;">Parcourir les fichiers</button>
+                        </div>
+                        
+                        <!-- Écran de chargement (caché par défaut) -->
+                        <div class="analysis-loader hidden">
+                            <div class="spinner-large"></div>
+                            <h3 id="analysis-step-text">Lecture des fichiers...</h3>
+                            <p class="analysis-subtext">Veuillez patienter pendant que Unitix cartographie l'architecture.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- VUE: DASHBOARD -->
+            <section class="view-section hidden-view" id="view-dashboard">
+                <div class="dashboard-header">
+                    <h2>Vue d'ensemble</h2>
+                    <p>Bienvenue sur Unitix. Voici un résumé de vos tests récents.</p>
+                </div>
+                <div class="stat-cards">
+                    <div class="stat-card">
+                        <h3>Tests Générés (Ce Mois)</h3>
+                        <p class="stat-value">1,248</p>
+                        <span class="stat-trend positive">↑ 12% vs mois dernier</span>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Taux de Couverture (Est.)</h3>
+                        <p class="stat-value">84%</p>
+                        <span class="stat-trend positive">↑ 5% vs mois dernier</span>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Temps Gagné</h3>
+                        <p class="stat-value">42h</p>
+                        <span class="stat-trend neutral">-</span>
+                    </div>
+                </div>
+                <div class="dashboard-placeholder">
+                    <svg viewBox="0 0 24 24" width="48" height="48" stroke="currentColor" stroke-width="1" fill="none"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
+                    <p>Graphique de génération de tests à venir...</p>
+                </div>
+            </section>
+
+            <!-- VUE: GENERATOR -->
+            <section class="view-section hidden-view generator-layout" id="view-generator">
+                <!-- PANNEAU GAUCHE: INPUT CODE -->
+                <section class="panel input-panel">
+                <div class="panel-header">
+                    <div class="tabs">
+                        <button class="tab-btn active" data-target="single-file">Fichier Unique</button>
+                        <button class="tab-btn" data-target="project-mode">Projet Entier</button>
+                    </div>
+                    <span class="badge">JS / TS</span>
+                </div>
+                
+                <div class="editor-container active-tab" id="single-file">
+                    <textarea id="source-code" class="code-editor" spellcheck="false" placeholder="// Collez votre code ici...
+
+function calculateTotal(price, taxRate) {
+    if (price < 0 || taxRate < 0) {
+        throw new Error('Invalid input');
+    }
+    return price + (price * taxRate);
+}"></textarea>
+                </div>
+                
+                <div class="editor-container hidden-tab" id="project-mode">
+                    <div class="upload-zone">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="upload-icon"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
+                        <p>Glissez-déposez votre dossier de projet ici</p>
+                        <span class="upload-or">ou</span>
+                        <button class="outline-btn">Sélectionner un dossier</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- PANNEAU CENTRAL: CONFIGURATION -->
+            <section class="panel config-panel">
+                <div class="config-section">
+                    <label for="framework-select">Framework</label>
+                    <div class="select-wrapper">
+                        <select id="framework-select" class="custom-select">
+                            <option value="jest">Jest</option>
+                            <option value="mocha">Mocha / Chai</option>
+                            <option value="vitest">Vitest</option>
+                            <option value="pytest">PyTest</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="config-section">
+                    <label>Type de Test</label>
+                    <div class="radio-group">
+                        <label class="radio-label">
+                            <input type="radio" name="test-type" value="unit" checked>
+                            <span class="radio-custom"></span>
+                            Unitaire
+                        </label>
+                        <label class="radio-label">
+                            <input type="radio" name="test-type" value="integration">
+                            <span class="radio-custom"></span>
+                            Intégration
+                        </label>
+                        <label class="radio-label">
+                            <input type="radio" name="test-type" value="e2e">
+                            <span class="radio-custom"></span>
+                            E2E
+                        </label>
+                    </div>
+                </div>
+
+                <div class="action-container">
+                    <button id="generate-btn" class="glow-button">
+                        <span class="btn-text">Générer les Tests</span>
+                        <div class="loader hidden"></div>
+                    </button>
+                </div>
+                
+                <!-- Shield Icon Decoration (referencing logo) -->
+                <div class="shield-decoration">
+                    <svg viewBox="0 0 24 24" class="check-icon" stroke="currentColor" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                </div>
+            </section>
+
+            <!-- PANNEAU DROITE: OUTPUT TEST -->
+            <section class="panel output-panel">
+                <div class="panel-header">
+                    <h2>Tests Générés</h2>
+                    <button id="copy-btn" class="icon-btn" title="Copier le code">
+                        <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                    </button>
+                </div>
+                <div class="editor-container result-container">
+                    <pre id="output-code" class="code-output"><code class="language-javascript">// Vos tests apparaîtront ici...</code></pre>
+                </div>
+            </section>
+            </section> <!-- Fin de view-generator -->
+
+            <!-- VUE: HISTORY -->
+            <section class="view-section hidden-view" id="view-history">
+                <h2>Historique des Tests</h2>
+                <div class="table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Fichier / Projet</th>
+                                <th>Framework</th>
+                                <th>Type</th>
+                                <th>Statut</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Aujourd'hui, 10:15</td>
+                                <td><code>authService.js</code></td>
+                                <td>Jest</td>
+                                <td>Unitaire</td>
+                                <td><span class="badge badge-success">Généré</span></td>
+                            </tr>
+                            <tr>
+                                <td>Aujourd'hui, 09:30</td>
+                                <td><code>api/routes</code></td>
+                                <td>PyTest</td>
+                                <td>Intégration</td>
+                                <td><span class="badge badge-success">Généré</span></td>
+                            </tr>
+                            <tr>
+                                <td>Hier, 15:45</td>
+                                <td><code>CheckoutComponent.jsx</code></td>
+                                <td>Vitest</td>
+                                <td>Unitaire</td>
+                                <td><span class="badge badge-error">Erreur</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- VUE: ARCHITECTURE -->
+            <section class="view-section hidden-view" id="view-architecture">
+                <h2>Architecture du Projet</h2>
+                <div class="tree-view">
+                    <ul>
+                        <li class="folder open">
+                            <span class="node-title"><svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none" class="folder-icon"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg> src/</span>
+                            <ul>
+                                <li class="folder open">
+                                    <span class="node-title"><svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none" class="folder-icon"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg> components/</span>
+                                    <ul>
+                                        <li class="file tested"><span class="node-title"><svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none" class="file-icon"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline></svg> Button.jsx</span> <span class="coverage">100%</span></li>
+                                        <li class="file untested"><span class="node-title"><svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none" class="file-icon"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline></svg> Header.jsx</span> <span class="coverage">0%</span></li>
+                                    </ul>
+                                </li>
+                                <li class="folder">
+                                    <span class="node-title"><svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none" class="folder-icon"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg> utils/</span>
+                                    <ul>
+                                        <li class="file tested"><span class="node-title"><svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none" class="file-icon"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline></svg> math.js</span> <span class="coverage">100%</span></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- VUE: TEMPLATES -->
+            <section class="view-section hidden-view" id="view-templates">
+                <h2>Templates Personnalisés</h2>
+                <div class="panel">
+                    <textarea class="code-editor" style="height: 300px;">// Définissez vos règles globales de mocks ici
+export const globalMocks = {
+    'axios': () => ({
+        get: vi.fn(),
+        post: vi.fn()
+    })
+};</textarea>
+                    <button class="glow-button" style="margin-top: 1rem;">Sauvegarder les templates</button>
+                </div>
+            </section>
+
+            <!-- VUE: SETTINGS -->
+            <section class="view-section hidden-view" id="view-settings">
+                <h2>Paramètres</h2>
+                <form class="settings-form panel">
+                    <div class="input-group">
+                        <label>Framework par défaut</label>
+                        <select class="custom-select">
+                            <option>Jest</option>
+                            <option>Vitest</option>
+                            <option>PyTest</option>
+                        </select>
+                    </div>
+                    <div class="input-group" style="margin-top: 1rem;">
+                        <label>Thème</label>
+                        <select class="custom-select">
+                            <option>Sombre (Néon)</option>
+                            <option>Clair</option>
+                        </select>
+                    </div>
+                    <button class="glow-button" style="margin-top: 2rem;">Appliquer</button>
+                </form>
+            </section>
+
+        </main>
+        </div>
+    </div>
+
+    <!-- Scripts Modulaires -->
+    <script type="module" src="./js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,123 @@
+/* Tutorial Styles */
+
+.tutorial-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(3px);
+    z-index: 9990; /* Juste en dessous du popover et des éléments en surbrillance */
+    transition: opacity 0.3s ease;
+}
+
+.tutorial-overlay.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* La classe à ajouter sur l'élément en surbrillance */
+.tutorial-highlight {
+    position: relative !important;
+    z-index: 9995 !important;
+    box-shadow: 0 0 0 4px var(--neon-cyan), 0 0 20px var(--neon-cyan-dim) !important;
+    border-radius: var(--radius-md);
+    background-color: var(--bg-panel);
+    transition: box-shadow 0.3s ease;
+    pointer-events: none; /* Empeche de cliquer sur l'élément pendant le tuto */
+}
+
+/* Annule les contextes d'empilement (stacking contexts) des parents pendant le tutoriel,
+   SAUF si le parent est LUI-MÊME l'élément mis en évidence ! */
+body.tutorial-active .app-header:not(.tutorial-highlight),
+body.tutorial-active .sidebar:not(.tutorial-highlight),
+body.tutorial-active .workspace:not(.tutorial-highlight) {
+    z-index: auto !important;
+    backdrop-filter: none !important; /* Le blur() crée un stacking context, il faut l'annuler */
+    transform: none !important;
+}
+
+/* Le composant bulle d'information */
+.tutorial-popover {
+    position: absolute;
+    z-index: 9999;
+    background: linear-gradient(145deg, var(--bg-panel), var(--bg-dark));
+    border: 1px solid var(--neon-cyan);
+    border-radius: var(--radius-lg);
+    width: 320px;
+    padding: 1.5rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 20px rgba(0, 255, 255, 0.1);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    opacity: 1;
+}
+
+.tutorial-popover.hidden {
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(20px) scale(0.95);
+}
+
+.tutorial-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.8rem;
+}
+
+.tutorial-header h3 {
+    color: var(--text-main);
+    font-size: 1.1rem;
+    margin: 0;
+}
+
+.tutorial-step-badge {
+    background: var(--neon-cyan-dim);
+    color: var(--neon-cyan);
+    padding: 0.2rem 0.5rem;
+    border-radius: var(--radius-full);
+    font-size: 0.75rem;
+    font-weight: 700;
+}
+
+.tutorial-popover p {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    line-height: 1.5;
+    margin-bottom: 1.5rem;
+}
+
+.tutorial-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.btn-skip {
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.btn-skip:hover {
+    color: white;
+}
+
+.btn-next {
+    background: var(--neon-cyan);
+    color: black;
+    border: none;
+    border-radius: var(--radius-md);
+    padding: 0.5rem 1.2rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn-next:hover {
+    background: white;
+    box-shadow: 0 0 15px var(--neon-cyan);
+}

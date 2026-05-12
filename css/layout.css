@@ -1,0 +1,64 @@
+.app-container {
+    display: flex;
+    flex-direction: row; /* Modifié pour sidebar à gauche */
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+}
+
+.main-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow: hidden;
+    position: relative;
+    transition: margin-left var(--transition-base);
+}
+
+.workspace {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+    padding: 1rem;
+    gap: 1rem;
+}
+
+.panel {
+    background-color: var(--bg-panel);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-panel);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.input-panel {
+    flex: 1.5;
+}
+
+.config-panel {
+    flex: 1;
+    min-width: 300px;
+    max-width: 400px;
+    background: linear-gradient(180deg, var(--bg-panel) 0%, var(--bg-dark) 100%);
+    border-color: var(--border-color);
+}
+
+.output-panel {
+    flex: 1.5;
+}
+
+@media (max-width: 1024px) {
+    .workspace {
+        flex-direction: column;
+        overflow-y: auto;
+    }
+    .panel {
+        min-height: 400px;
+    }
+    body {
+        overflow: auto;
+    }
+}
