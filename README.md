@@ -55,4 +55,4 @@ Unitix-site/
 Ce projet est un prototype front-end. Si vous souhaitez l'étendre (par exemple, en le connectant à un backend Node.js ou à une API Python d'intelligence artificielle), n'hésitez pas à forker le dépôt et à soumettre des Pull Requests.
 
 ---
-*Conçu et développé par Benoit Houthoofd.*
+*Conçu et développé par Benoit Houthoofd pour Odyssée Software.*
